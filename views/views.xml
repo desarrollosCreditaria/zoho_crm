@@ -1,44 +1,57 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
-<record id="view_crm_form_inherit_zoho" model="ir.ui.view">
-        <field name="name">CRM Zoho inherit</field>
-        <field name="model">crm.lead</field>
-        <field name="inherit_id" ref="crm.crm_lead_view_form" />
-        <field name="arch" type="xml">
-           <notebook>
-             <page string="Zoho">
-             <group string="Insertar Oficina">
-             <field name="check_zoho_id" />
-             <field name="zoho_id"  attrs="{'invisible':[('check_zoho_id','=', False)]}" string="Zoho ID"/>
-             <field name="nombre_oficina" widget="mobile"/>
-             <field name="telefono_oficina"/>
-             <field name="calle_num_oficina"/>
-             <field name="colonia_oficina"/>
-             <field name="delegacion_oficina"/>
-             <field name="estado_oficina"/>
-             <field name="cp_oficina"/>
-             <field name="correo_oficina"/>
-             <field name="sitio_web_oficina"/>       
+<data>
+  <record id="view_crm_form_inherit_zoho" model="ir.ui.view">
+    <field name="name">crm.lead.zoho</field>
+    <field name="model">crm.lead</field>
+    <field name="inherit_id" ref="crm.crm_lead_view_form"/>
+    <field name="arch" type="xml">
+     <xpath expr="/form/sheet/notebook/page[2]" position="after">
+      <page name="zoho" groups="zoho.btn_zoho" string="Zoho">
+          <group string="Insertar Operación">
+          <field name="nombre" string="Nombre"/>
+          <field name="ap_paterno" string="Apellido Paterno"/>
+          <field name="ap_materno" string="Apellido Materno"/>
+          <field name="x_rfc" readonly="1" string="RFC: "/> 
+          <field name="banco" string="Banco"/>  
+          <field name="estado" widget="selection"/>
+          <field name="municipio" widget="selection"/>  
+          <field name="expected_revenue" readonly="1"/>  
+          <button name="inserta_operacion"  type="object" string="Enviar Datos" class="oe_highlight"  />
+        </group>
+    
+        <group name="files" string="Archivos">
+          <field name="zoho_files" string="" mode="tree"  >  
+            <tree> 
+            <field name="archivo" string="" widget="pdf_viewer" />
+           
+            <!-- <field name="fecha_creacion"/> -->
+            </tree>
+          </field>
+        </group>
+      </page>
+    
+    </xpath>
+    </field>
+  </record>
 
+  <record id="res_users_zoho" model="ir.ui.view">
+    <field name="name">Zoho ID Field</field>
+    <field name="model">res.users</field>
+    <field name="inherit_id" ref="base.view_users_form"/>
+    <field name="arch" type="xml">
+    <xpath expr="//div[hasclass('oe_title')]" position="after">
+    <group>
+          <field name="zoho_id"/>
 
-             </group>
-              <group string=" Insertar Operacion">
-                
-                <field name="nombre" string="Nombre"/>
-                <field name="ap_paterno" string="Apellido Paterno"/>
-                <field name="ap_materno" string="Apellido Materno"/>
-                <field name="rfc" string="RFC"/> 
-                <field name="banco" string="Banco"/>  
-                <field name="entidad_federativa" string="Entidad Federativa"/> 
-                <field name="municipio"/>    
-                <field name="archivo_base64" string="Archivo"/>
-              <button name="inserta_operacion" type="object" string="Enviar Datos" class="oe_highlight"  />
+    </group>
+    </xpath>
+    </field>
+    </record>
+      
+ 
 
-
-              </group>
-            </page>
-           </notebook>
-
-        </field>    
-       </record>
-  </odoo>
+</data>
+   
+</odoo>
+  
